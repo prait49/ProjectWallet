@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>WalletConsumer</artifactId>
+    <artifactId>WalletConsumer2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>WalletConsumer</name>
-    <description>WalletConsumer</description>
+    <name>WalletConsumer2</name>
+    <description>WalletConsumer2</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -82,4 +82,3 @@
     </build>
 
 </project>
-

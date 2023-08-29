@@ -1,32 +1,30 @@
 package com.example.walletproducer;
 
 
+import com.example.walletproducer.wallet.WalletEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 public class WalletProducerController {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, WalletEvent> kafkaTemplate;
     private static final String TOPIC = "wallet-events";
 
-    public WalletProducerController(KafkaTemplate<String, String> kafkaTemplate) {
+
+    public WalletProducerController(KafkaTemplate<String, WalletEvent> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @PostMapping("/api/producer/deposit")
-    public String depositMoney(@RequestParam int walletId, @RequestParam double amount) {
-        String event ="Deposit "+amount+" "+walletId;
-        kafkaTemplate.send(TOPIC, event);
-        return "Запрос на внесение отправлен в кафку: " + event;
-    }
-
-    @PostMapping("/api/producer/withdraw")
-    public String withdrawMoney(@RequestParam int walletId, @RequestParam double amount) {
-        String event = "Withdrawal of " + amount + " from wallet " + walletId;
-        kafkaTemplate.send(TOPIC, event);
-        return "Withdrawal event sent to Kafka: " + event;
+    @PostMapping("/api/producer")
+    public String depositMoney(@RequestBody WalletEvent walletEvent) {
+            if (walletEvent.getAction().equals("Deposit")||walletEvent.getAction().equals("Withdraw")){
+                kafkaTemplate.send(TOPIC, walletEvent);
+                return "Запрос отправлен в кафку: " + walletEvent;
+            }
+            else return null;
     }
 }

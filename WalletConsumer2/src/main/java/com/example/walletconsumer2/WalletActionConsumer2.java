@@ -1,23 +1,22 @@
-package com.example.walletconsumer;
+package com.example.walletconsumer2;
 
-import com.example.walletconsumer.service.WalletService;
-import com.example.walletconsumer.wallet.WalletJson;
+import com.example.walletconsumer2.service.WalletService;
+import com.example.walletconsumer2.wallet.WalletJson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WalletActionConsumer {
+public class WalletActionConsumer2 {
 
     private final WalletService walletService;
     private final ObjectMapper objectMapper;
 
-    public WalletActionConsumer(WalletService walletService, ObjectMapper objectMapper) {
+    public WalletActionConsumer2(WalletService walletService, ObjectMapper objectMapper) {
         this.walletService = walletService;
         this.objectMapper = objectMapper;
     }
-
     @KafkaListener(topics = "wallet-events", groupId = "wallet-action-consumer")
     public void consumeWalletEvent(String eventJson) {
         try {
