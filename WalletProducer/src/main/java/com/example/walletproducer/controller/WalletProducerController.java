@@ -1,7 +1,7 @@
-package com.example.walletproducer;
+package com.example.walletproducer.controller;
 
 
-import com.example.walletproducer.wallet.WalletEvent;
+import com.example.walletproducer.model.WalletEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +23,7 @@ public class WalletProducerController {
     public String depositMoney(@RequestBody WalletEvent walletEvent) {
             if (walletEvent.getAction().equals("Deposit")||walletEvent.getAction().equals("Withdraw")){
                 kafkaTemplate.send(TOPIC, walletEvent);
+                System.out.println(walletEvent);
                 return "Запрос отправлен в кафку: " + walletEvent;
             }
             else return null;

@@ -1,4 +1,4 @@
-package com.example.walletproducer.wallet;
+package com.example.walletconsumer.models;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class WalletEvent {
+public class WalletJson {
     private String action;
     private int id;
     private double amount;
 }
-

@@ -1,8 +1,7 @@
 package com.example.walletconsumer.repository;
 
-import com.example.walletconsumer.wallet.Wallet;
+import com.example.walletconsumer.models.Wallet;
 import jakarta.persistence.LockModeType;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
@@ -17,7 +16,6 @@ public interface WalletRepository extends JpaRepository<Wallet,Integer> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Wallet save(Wallet wallet);
-
 
     Optional<Wallet>findAllById(Integer integer);
 }

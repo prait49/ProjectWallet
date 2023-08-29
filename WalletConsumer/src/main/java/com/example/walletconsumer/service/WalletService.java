@@ -1,7 +1,7 @@
 package com.example.walletconsumer.service;
 
 import com.example.walletconsumer.repository.WalletRepository;
-import com.example.walletconsumer.wallet.Wallet;
+import com.example.walletconsumer.models.Wallet;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

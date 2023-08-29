@@ -1,13 +1,12 @@
-package com.example.walletconsumer;
+package com.example.walletconsumer.controller;
 
 import com.example.walletconsumer.service.WalletService;
-import com.example.walletconsumer.wallet.WalletJson;
+import com.example.walletconsumer.models.WalletJson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
-@Service
+@Controller
 public class WalletActionConsumer {
 
     private final WalletService walletService;
@@ -32,7 +31,7 @@ public class WalletActionConsumer {
             }
 
         } catch (Exception e) {
-            System.out.println("ОШИБКА!!!");
+            e.printStackTrace();
         }
     }
 }

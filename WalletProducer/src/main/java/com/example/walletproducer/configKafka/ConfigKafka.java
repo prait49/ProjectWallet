@@ -1,4 +1,4 @@
-package com.example.walletproducer;
+package com.example.walletproducer.configKafka;
 
 
 import org.apache.kafka.clients.admin.NewTopic;
