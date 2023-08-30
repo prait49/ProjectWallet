@@ -36,6 +36,11 @@ public class Main {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }

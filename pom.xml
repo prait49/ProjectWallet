@@ -15,10 +15,12 @@
     <name>ProjectWallet</name>
     <description>ProjectWallet</description>
     <modules>
-        <module>TestApplication</module>
+        <module>WalletProducer</module>
         <module>WalletConsumer</module>
         <module>WalletConsumer2</module>
-        <module>WalletProducer</module>
+        <module>TestApplication</module>
+        <module>WalletJson</module>
+
     </modules>
     <properties>
         <java.version>17</java.version>
