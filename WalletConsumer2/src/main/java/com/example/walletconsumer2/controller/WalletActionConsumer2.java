@@ -1,8 +1,8 @@
 package com.example.walletconsumer2.controller;
 
 import com.example.walletconsumer2.service.WalletService;
-import com.example.walletconsumer2.wallet.WalletJson;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.WalletJson;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Controller;
 

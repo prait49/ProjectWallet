@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.models.Wallet;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,8 +25,8 @@ public class Main {
                     int walletId = 1; // Идентификатор кошелька
                     double amountToDeposit = 10; // Сумма депозита
 
-                    Wallet wallet = new Wallet(walletId, amountToDeposit, "Deposit");
-                    HttpEntity<Wallet> request = new HttpEntity<>(wallet, headers);
+                    WalletJson walletJson = new WalletJson("Deposit", walletId, amountToDeposit);
+                    HttpEntity<WalletJson> request = new HttpEntity<>(walletJson, headers);
 
                     String url = "http://localhost:8080/api/producer";
                     try {
