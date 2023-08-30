@@ -25,7 +25,7 @@ public class Main {
                     int walletId = 1; // Идентификатор кошелька
                     double amountToDeposit = 10; // Сумма депозита
 
-                    WalletJson walletJson = new WalletJson("Deposit", walletId, amountToDeposit);
+                    WalletJson walletJson = new WalletJson("Deposit",walletId, amountToDeposit);
                     HttpEntity<WalletJson> request = new HttpEntity<>(walletJson, headers);
 
                     String url = "http://localhost:8080/api/producer";
