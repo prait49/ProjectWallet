@@ -8,19 +8,17 @@
         <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>org.example</groupId>
     <artifactId>ProjectWallet</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>ProjectWallet</name>
     <description>ProjectWallet</description>
     <modules>
+        <module>WalletJson</module>
+        <module>TestApplication</module>
         <module>WalletProducer</module>
         <module>WalletConsumer</module>
-        <module>WalletConsumer2</module>
-        <module>TestApplication</module>
-        <module>WalletJson</module>
-
     </modules>
     <properties>
         <java.version>17</java.version>

@@ -1,5 +1,7 @@
 package org.example;
 
+
+import org.example.models.WalletJson;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -7,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 
 public class Main {
     public static void main(String[] args) {
