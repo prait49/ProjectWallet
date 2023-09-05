@@ -8,5 +8,5 @@ WORKDIR /app
 COPY /target/TestApplication-0.0.1-SNAPSHOT.jar /app/TestApplication-0.0.1-SNAPSHOT.jar
 
 # Команда для запуска приложения
-CMD ["java", "-jar", "TestApplication-0.0.1-SNAPSHOT.jar"]
+CMD ["sh", "-c", "sleep 30 && java -jar TestApplication-0.0.1-SNAPSHOT.jar"]
 

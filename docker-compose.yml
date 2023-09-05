@@ -114,11 +114,16 @@ services:
       - POSTGRES_PASSWORD=2679
       - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.0.119:29092,192.168.0.119:39092
 
+
+#Должно запускаться, после запуска всего остального
   TestApplication:
     build: /TestApplication
     image: test-application
     container_name: test-application
     depends_on:
-      - WalletProducer
-      - WalletConsumer1
-      - WalletConsumer2
+      WalletProducer:
+        condition: service_started
+      WalletConsumer1:
+        condition: service_started
+      WalletConsumer2:
+        condition: service_started

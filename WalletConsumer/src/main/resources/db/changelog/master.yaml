@@ -23,7 +23,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: amount
-                  valueNumeric: 123580.51
+                  valueNumeric: 0.00
   - changeSet:
       id: 3
       author: postgres

@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 public class Main {
     public static void main(String[] args) {
         int numThreads = 10; // Количество потоков
-        int requestsPerThread = 3000; // Количество запросов на каждом потоке
+        int requestsPerThread = 500; // Количество запросов на каждом потоке
         ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -31,7 +31,7 @@ public class Main {
                     WalletJson walletJson = new WalletJson("Deposit",walletId, amountToDeposit);
                     HttpEntity<WalletJson> request = new HttpEntity<>(walletJson, headers);
 
-                    String url = "http://localhost:8080/api/producer";
+                    String url = "http://192.168.0.119:8080/api/producer";
                     try {
                         String response = restTemplate.postForObject(url, request, String.class);
                         System.out.println("Thread " + threadNum + " - Request " + i + ": " + response);
