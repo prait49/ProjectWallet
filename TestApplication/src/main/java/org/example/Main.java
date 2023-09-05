@@ -13,8 +13,8 @@ import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
-        int numThreads = 6; // Количество потоков
-        int requestsPerThread = 500; // Количество запросов на каждом потоке
+        int numThreads = 10; // Количество потоков
+        int requestsPerThread = 3000; // Количество запросов на каждом потоке
         ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -38,11 +38,11 @@ public class Main {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(1);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             });
         }

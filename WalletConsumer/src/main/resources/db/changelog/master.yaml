@@ -12,7 +12,7 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: balance
+                  name: amount
                   type: DECIMAL(30,4)
   - changeSet:
       id: 2
@@ -22,7 +22,7 @@ databaseChangeLog:
             tableName: wallet
             columns:
               - column:
-                  name: balance
+                  name: amount
                   valueNumeric: 123580.51
   - changeSet:
       id: 3
@@ -32,7 +32,7 @@ databaseChangeLog:
             tableName: wallet
             columns:
               - column:
-                  name: balance
+                  name: amount
                   valueNumeric: 880055535.35
   - changeSet:
       id: 4
@@ -42,5 +42,5 @@ databaseChangeLog:
             tableName: wallet
             columns:
               - column:
-                  name: balance
+                  name: amount
                   valueNumeric: 684455353584.00

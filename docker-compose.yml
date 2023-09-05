@@ -1,4 +1,5 @@
 services:
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.4
     healthcheck:
@@ -12,7 +13,7 @@ services:
     ports:
       - 22181:2181
 
-  kafka:
+  kafka1:
     image: confluentinc/cp-kafka:6.2.4
     container_name: kafka1
     depends_on:
@@ -24,7 +25,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: OUTSIDE://:29092,INTERNAL://:9092
-      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://localhost:29092,INTERNAL://kafka1:9092
+      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://192.168.0.119:29092,INTERNAL://kafka1:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
@@ -33,15 +34,14 @@ services:
     image: confluentinc/cp-kafka:6.2.4
     container_name: kafka2
     depends_on:
-      zookeeper:
-        condition: service_healthy
+      - kafka1
     ports:
       - 39092:39092
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: OUTSIDE://:39092,INTERNAL://:9092
-      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://localhost:39092,INTERNAL://kafka2:9092
+      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://192.168.0.119:39092,INTERNAL://kafka2:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
@@ -55,3 +55,70 @@ services:
       ZK_HOSTS: "zookeeper:2181"
 
 
+
+
+#Запуск приложения в докере
+  wallet-db:
+    image: postgres:alpine3.18
+    depends_on:
+      - kafka1
+      - kafka2
+    container_name: wallet-db
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=wallet
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2679
+
+
+  WalletProducer:
+    build: /WalletProducer
+    image: wallet-producer
+    depends_on:
+      - kafka2
+    container_name: wallet-producer
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.0.119:29092,192.168.0.119:39092
+
+  WalletConsumer1:
+    build: /WalletConsumer
+    image: wallet-consumer1
+    container_name: wallet-consumer1
+    ports:
+      - "8085:8085"
+    depends_on:
+      - wallet-db
+      - WalletProducer
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://wallet-db:5432/wallet
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2679
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.0.119:29092,192.168.0.119:39092
+
+
+  WalletConsumer2:
+    build: /WalletConsumer
+    image: wallet-consumer2
+    container_name: wallet-consumer2
+    ports:
+      - "8082:8082"
+    depends_on:
+      - wallet-db
+      - WalletProducer
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://wallet-db:5432/wallet
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2679
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.0.119:29092,192.168.0.119:39092
+
+  TestApplication:
+    build: /TestApplication
+    image: test-application
+    container_name: test-application
+    depends_on:
+      - WalletProducer
+      - WalletConsumer1
+      - WalletConsumer2
