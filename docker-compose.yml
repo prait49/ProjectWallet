@@ -34,7 +34,8 @@ services:
     image: confluentinc/cp-kafka:6.2.4
     container_name: kafka2
     depends_on:
-      - kafka1
+      zookeeper:
+        condition: service_healthy
     ports:
       - 39092:39092
     environment:
@@ -49,6 +50,9 @@ services:
 
   kafka-manager:
     image: sheepkiller/kafka-manager:latest
+    depends_on:
+      - kafka1
+      - kafka2
     ports:
       - "9000:9000"
     environment:
@@ -121,9 +125,9 @@ services:
     image: test-application
     container_name: test-application
     depends_on:
-      WalletProducer:
-        condition: service_started
-      WalletConsumer1:
-        condition: service_started
-      WalletConsumer2:
-        condition: service_started
+      - WalletProducer
+      - WalletConsumer1
+      - WalletConsumer2
+      - wallet-db
+      - kafka1
+      - kafka2
