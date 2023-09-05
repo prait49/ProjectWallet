@@ -1,0 +1,59 @@
+version: '3'
+services:
+
+
+  wallet-db:
+    image: postgres:alpine3.18
+    container_name: wallet-db
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=wallet
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2679
+
+
+  WalletProducer:
+    build: ../WalletProducer
+    image: wallet-producer
+    container_name: wallet-producer
+    network_mode: "host"
+    ports:
+      - "8080:8080"
+
+  WalletConsumer1:
+    build: ../WalletConsumer
+    image: wallet-consumer1
+    container_name: wallet-consumer1
+    network_mode: "host"
+    ports:
+      - "8085:8085"
+    depends_on:
+      - wallet-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://wallet-db:5432/wallet
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2679
+
+
+
+  WalletConsumer2:
+    build: ../WalletConsumer
+    image: wallet-consumer2
+    container_name: wallet-consumer2
+    network_mode: "host"
+    ports:
+      - "8082:8082"
+    depends_on:
+      - wallet-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://wallet-db:5432/wallet
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2679
+
+
+  TestApplication:
+    build: ../TestApplication
+    image: test-application
+    container_name: test-application
+
