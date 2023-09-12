@@ -9,13 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-@EmbeddedKafka(topics = {"wallet-events"}, partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:29092","port=9092"})
-
+@EmbeddedKafka(topics = {"wallet-events"}, partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:29093","port=9092"})
+@TestPropertySource(properties = {"spring.kafka.bootstrap-servers=localhost:29093"})
 public class WalletActionConsumerTest {
 
     @Autowired
