@@ -1,9 +1,9 @@
-package org.example.walletconsumer.service;
+package org.example.walletConsumer.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.example.walletconsumer.models.Wallet;
-import org.example.walletconsumer.repository.WalletRepository;
+import org.example.walletConsumer.models.Wallet;
+import org.example.walletConsumer.repository.WalletRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;

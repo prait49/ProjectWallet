@@ -1,8 +1,8 @@
-package org.example.walletconsumer.controller;
+package org.example.walletConsumer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.models.WalletJson;
-import org.example.walletconsumer.service.WalletService;
+import org.example.walletConsumer.service.WalletService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Controller;
 
@@ -29,7 +29,6 @@ public class WalletActionConsumer {
             } else if (action.equals("Withdraw")) {
                 System.out.println(walletService.withdrawMoney(walletId, amount));
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

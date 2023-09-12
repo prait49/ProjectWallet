@@ -59,8 +59,6 @@ services:
       ZK_HOSTS: "zookeeper:2181"
 
 
-
-
 #Запуск приложения в докере
   wallet-db:
     image: postgres:alpine3.18

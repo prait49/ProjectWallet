@@ -1,13 +1,13 @@
-package org.example.walletproducer;
+package org.example.walletConsumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WalletProducerApplication {
+public class WalletConsumerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WalletProducerApplication.class, args);
+        SpringApplication.run(WalletConsumerApplication.class, args);
     }
 
 }

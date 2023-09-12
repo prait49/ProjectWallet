@@ -1,4 +1,4 @@
-package org.example.walletconsumer.models;
+package org.example.walletConsumer.models;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;

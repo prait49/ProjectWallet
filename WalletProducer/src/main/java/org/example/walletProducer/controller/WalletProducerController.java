@@ -1,6 +1,8 @@
-package org.example.walletproducer.controller;
+package org.example.walletProducer.controller;
 
 import org.example.models.WalletJson;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,7 @@ public class WalletProducerController {
     }
 
     @PostMapping("/api/producer")
-    public String depositMoney(@RequestBody WalletJson walletJson) {
+    public ResponseEntity<String> depositMoney(@RequestBody WalletJson walletJson) {
             if (walletJson.getAction().equals("Deposit")|| walletJson.getAction().equals("Withdraw")){
 
                 int key = messageKey.getAndIncrement();
@@ -29,8 +31,8 @@ public class WalletProducerController {
                 System.out.println(keyString);
                 kafkaTemplate.send(TOPIC, keyString, walletJson);
                 System.out.println(walletJson);
-                return "Запрос отправлен в кафку: " + walletJson;
+                return ResponseEntity.ok("Запрос отправлен в кафку: " + walletJson);
             }
-            else return null;
+            else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Выберите правильную операцию.");
     }
 }
