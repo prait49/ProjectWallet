@@ -38,7 +38,6 @@ public class WalletProducerIntegrationTest {
     @Autowired
     private EmbeddedKafkaBroker embeddedKafka;
 
-
     @Test
     public void testInvalidRequestReturnsUnauthorized() throws Exception {
         WalletJson invalidRequest = new WalletJson("InvalidAction", 1, 100.0);

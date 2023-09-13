@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class WalletService {
 
-
     private final WalletRepository walletRepository;
-
 
     //Данный метод позволяет внести деньги на кошелек
     @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -30,7 +28,6 @@ public class WalletService {
     public Wallet withdrawMoney(int walletId, double amount) {
         Wallet wallet = walletRepository.findById(walletId).orElseThrow(() -> new EntityNotFoundException("Такого кошелька не существует"));
         double newBalance = wallet.getAmount() - amount;
-
         if (newBalance < 0) {
             throw new IllegalArgumentException("Недостаточно средств на кошельке");
         }
@@ -39,8 +36,10 @@ public class WalletService {
         return wallet;
     }
 
-//    //Данный метод позволяет показать кошелек
-//    public Wallet getWallet(int walletId) {
-//        return walletRepository.findAllById(walletId).orElseThrow(() -> new EntityNotFoundException("Такого кошелька не существует"));
-//    }
+    //Данный метод позволяет показать кошелек
+    public Wallet getWallet(int walletId) {
+        Wallet wallet = walletRepository.findById(walletId).orElseThrow(() -> new EntityNotFoundException("Такого кошелька не существует"));
+
+        return wallet;
+    }
 }

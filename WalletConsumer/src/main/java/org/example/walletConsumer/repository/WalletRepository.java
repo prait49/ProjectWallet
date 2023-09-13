@@ -17,5 +17,4 @@ public interface WalletRepository extends JpaRepository<Wallet,Integer> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Wallet save(Wallet wallet);
 
-    Optional<Wallet>findAllById(Integer integer);
 }

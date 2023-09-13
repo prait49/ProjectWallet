@@ -12,13 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 
 @ExtendWith(MockitoExtension.class)
 public class WalletProducerControllerTest {
-
     @Mock
     private KafkaTemplate<String, WalletJson> kafkaTemplate;
     @InjectMocks
@@ -33,7 +31,6 @@ public class WalletProducerControllerTest {
         Mockito.verify(kafkaTemplate)
                 .send(eq("wallet-events"), anyString(), eq(walletJson));
     }
-
     @Test
     public void testInvalidRequest() {
         // подготовка данных

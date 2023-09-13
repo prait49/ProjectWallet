@@ -3,11 +3,14 @@ package org.example.walletConsumer.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.models.WalletJson;
+import org.example.walletConsumer.controller.WalletActionConsumer;
 import org.example.walletConsumer.models.Wallet;
 import org.example.walletConsumer.repository.WalletRepository;
+import org.example.walletConsumer.service.WalletService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.TestPropertySource;
@@ -17,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @EmbeddedKafka(topics = {"wallet-events"}, partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:29092","port=9092"})
 @TestPropertySource(properties = {"spring.kafka.bootstrap-servers=localhost:29092"})
+@Import(WalletActionConsumer.class)
 public class WalletConsumerIntegrationTest {
 
     @Autowired
@@ -25,12 +29,16 @@ public class WalletConsumerIntegrationTest {
     @Autowired
     private WalletRepository walletRepository;
 
+    @Autowired
+    private WalletActionConsumer walletActionConsumer;
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void testDepositMoney() throws Exception {
         WalletJson walletJson = new WalletJson("Deposit", 1, 10.0);
         kafkaTemplate.send("wallet-events", objectMapper.writeValueAsString(walletJson));
+//        walletActionConsumer.consumeWalletEvent(objectMapper.writeValueAsString(walletJson));
         // Небольшая пауза, чтобы дать Kafka Consumer время на обработку сообщения
         Thread.sleep(2000);
         Wallet wallet = walletRepository.findById(1).orElse(null);
@@ -48,7 +56,5 @@ public class WalletConsumerIntegrationTest {
         assertNotNull(wallet);
         assertNotEquals(-40.0, wallet.getAmount(), 0.001);
     }
-
-
 }
 

@@ -27,7 +27,6 @@ public class WalletActionConsumerTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-
     @Test
     public void testConsumeDepositWalletEvent() throws Exception {
         WalletJson walletJson = new WalletJson("Deposit", 1, 10.0);
