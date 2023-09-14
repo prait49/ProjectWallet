@@ -1,5 +1,8 @@
 services:
 
+
+#Нужно во всем файле поменять порты, на необходимые
+# В данном случе, заменить порт 192.168.43.233 на желаемый.
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.4
     healthcheck:
@@ -25,7 +28,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: OUTSIDE://:29092,INTERNAL://:9092
-      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://192.168.0.119:29092,INTERNAL://kafka1:9092
+      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://192.168.43.233:29092,INTERNAL://kafka1:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
@@ -42,7 +45,7 @@ services:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: OUTSIDE://:39092,INTERNAL://:9092
-      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://192.168.0.119:39092,INTERNAL://kafka2:9092
+      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://192.168.43.233:39092,INTERNAL://kafka2:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
@@ -54,7 +57,7 @@ services:
       - kafka1
       - kafka2
     ports:
-      - "9000:9000"
+      - "9001:9001"
     environment:
       ZK_HOSTS: "zookeeper:2181"
 
@@ -83,7 +86,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.0.119:29092,192.168.0.119:39092
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.43.233:29092,192.168.43.233:39092
 
   WalletConsumer1:
     build: /WalletConsumer
@@ -98,7 +101,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://wallet-db:5432/wallet
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=2679
-      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.0.119:29092,192.168.0.119:39092
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.43.233:29092,192.168.43.233:39092
 
 
   WalletConsumer2:
@@ -114,7 +117,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://wallet-db:5432/wallet
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=2679
-      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.0.119:29092,192.168.0.119:39092
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.43.233:29092,192.168.43.233:39092
 
 
 #Должно запускаться, после запуска всего остального

@@ -31,7 +31,7 @@ public class Main {
                     WalletJson walletJson = new WalletJson("Deposit",walletId, amountToDeposit);
                     HttpEntity<WalletJson> request = new HttpEntity<>(walletJson, headers);
 
-                    String url = "http://192.168.0.119:8080/api/producer";
+                    String url = "http://192.168.43.233:8080/api/producer";
                     try {
                         String response = restTemplate.postForObject(url, request, String.class);
                         System.out.println("Thread " + threadNum + " - Request " + i + ": " + response);
